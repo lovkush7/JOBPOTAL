@@ -3,3 +3,8 @@ export enum UserRole{
     JOB_SEEKER = "JOB_SEEKER"
 
 }
+
+export enum AuthProvider {
+    LOCAL = "LOCAL",
+    GOOGLE = "GOOGLE"
+}

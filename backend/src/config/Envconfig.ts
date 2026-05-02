@@ -8,5 +8,6 @@ import "dotenv/config"
     static DB_USER= process.env.DB_USER
 
     static JWT_SECRET = process.env.JWT_SECRET
+    static REFRESH_TOKEN = process.env.REFRESH_TOKEN ;
 } 
 export default Envconfig;
