@@ -22,6 +22,11 @@ const models: TsoaRoute.Models = {
         "enums": ["EMPLOYEE","JOB_SEEKER"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AuthProvider": {
+        "dataType": "refEnum",
+        "enums": ["LOCAL","GOOGLE"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "User": {
         "dataType": "refObject",
         "properties": {
@@ -35,6 +40,12 @@ const models: TsoaRoute.Models = {
             "phone": {"dataType":"string","required":true},
             "address": {"dataType":"string","required":true},
             "role": {"ref":"UserRole","required":true},
+            "avatar": {"dataType":"string","required":true},
+            "authProvider": {"ref":"AuthProvider","required":true},
+            "googleId": {"dataType":"string","required":true},
+            "isEmailVerified": {"dataType":"boolean","required":true},
+            "isActive": {"dataType":"boolean","required":true},
+            "refreshToken": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },

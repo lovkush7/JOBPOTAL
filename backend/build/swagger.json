@@ -14,6 +14,13 @@
 				],
 				"type": "string"
 			},
+			"AuthProvider": {
+				"enum": [
+					"LOCAL",
+					"GOOGLE"
+				],
+				"type": "string"
+			},
 			"User": {
 				"properties": {
 					"id": {
@@ -48,6 +55,24 @@
 					},
 					"role": {
 						"$ref": "#/components/schemas/UserRole"
+					},
+					"avatar": {
+						"type": "string"
+					},
+					"authProvider": {
+						"$ref": "#/components/schemas/AuthProvider"
+					},
+					"googleId": {
+						"type": "string"
+					},
+					"isEmailVerified": {
+						"type": "boolean"
+					},
+					"isActive": {
+						"type": "boolean"
+					},
+					"refreshToken": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -60,7 +85,13 @@
 					"password",
 					"phone",
 					"address",
-					"role"
+					"role",
+					"avatar",
+					"authProvider",
+					"googleId",
+					"isEmailVerified",
+					"isActive",
+					"refreshToken"
 				],
 				"type": "object",
 				"additionalProperties": false

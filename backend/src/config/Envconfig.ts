@@ -9,5 +9,9 @@ import "dotenv/config"
 
     static JWT_SECRET = process.env.JWT_SECRET
     static REFRESH_TOKEN = process.env.REFRESH_TOKEN ;
+
+    static CLIENT_ID = process.env.CLIENT_ID
+    static CLIENT_SECRET = process.env.CLIENT_SECRET
+    static CALLBACK_URL = process.env.CALLBACK_URL
 } 
 export default Envconfig;

@@ -1,6 +1,7 @@
 import Envconfig from "../config/Envconfig.ts";
-import type User from "../entity/user.entities.ts";
+import User from "../entity/user.entities.ts";
 import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
 
 const GenerateToken = async(user: User)=>{
 const Token =  jwt.sign({
@@ -22,4 +23,13 @@ Envconfig.REFRESH_TOKEN!, {
     expiresIn: "7D"
 })
 }
+
+const saveRefreshtoken = async (userid: string , Refreshtoken: string)=>{
+    const hashed = await bcrypt.hashSync(Refreshtoken, 10)
+    await User.update({id: userid}, {
+        refreshToken: hashed
+    })
+}
+
+
 export default GenerateToken;
