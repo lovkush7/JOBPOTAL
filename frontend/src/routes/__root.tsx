@@ -5,7 +5,7 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 const RootLayout = () => (
   <>
     <div className="p-2   ">
-    <Navbar/>
+ 
       
     </div>
     <hr />
