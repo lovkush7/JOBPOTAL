@@ -4,9 +4,7 @@
 import type { TsoaRoute } from '@tsoa/runtime';
 import {  fetchMiddlewares, ExpressTemplateService } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { User } from './../Controller/User.controller';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { Authentication } from './../Controller/auth/Auth.controller';
+import { Authentication } from './../controller/auth/Auth.controller';
 import { expressAuthentication } from './../middleware/Authentication';
 // @ts-ignore - no great way to install types from subpackage
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
@@ -19,7 +17,7 @@ const expressAuthenticationRecasted = expressAuthentication as (req: ExRequest, 
 const models: TsoaRoute.Models = {
     "UserRole": {
         "dataType": "refEnum",
-        "enums": ["EMPLOYEE","JOB_SEEKER"],
+        "enums": ["ADMIN","EMPLOYEE","JOB_SEEKER"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "AuthProvider": {
@@ -89,35 +87,6 @@ export function RegisterRoutes(app: Router) {
 
 
     
-        const argsUser_getUser: Record<string, TsoaRoute.ParameterSchema> = {
-        };
-        app.get('/user',
-            ...(fetchMiddlewares<RequestHandler>(User)),
-            ...(fetchMiddlewares<RequestHandler>(User.prototype.getUser)),
-
-            async function User_getUser(request: ExRequest, response: ExResponse, next: any) {
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args: argsUser_getUser, request, response });
-
-                const controller = new User();
-
-              await templateService.apiHandler({
-                methodName: 'getUser',
-                controller,
-                response,
-                next,
-                validatedArgs,
-                successStatus: undefined,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsAuthentication_signup: Record<string, TsoaRoute.ParameterSchema> = {
                 body: {"in":"body","name":"body","required":true,"ref":"UserDto"},
         };

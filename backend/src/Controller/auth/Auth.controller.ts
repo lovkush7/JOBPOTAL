@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Request, Route, Security } from "tsoa";
-import type { UserDto } from "../../dto/User.dto.ts";
+import  { UserDto } from "../../dto/User.dto.ts";
 import AuthServices from "../../Service/Authservice/Auth.services.ts";
-import type Logindto from "../../dto/Login.dto.ts";
+import  Logindto from "../../dto/Login.dto.ts";
 
 
 const buildjwttoken =(token: string)=>{

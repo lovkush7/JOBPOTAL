@@ -16,6 +16,14 @@ app.use(cookieParser())
 AppDataSource.initialize().
 then(()=>{
    RegisterRoutes(app)
+   app.use((err: any, req: any, res: any, next: any) => {
+  console.log(err)
+
+  return res.status(err.status || 500).json({
+    message: err.message,
+    fields: err.fields,
+  })
+})
     app.listen(8000,()=>{
         console.log("server is running")
     })

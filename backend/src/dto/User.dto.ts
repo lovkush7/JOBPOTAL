@@ -25,7 +25,7 @@ export class UserDto {
 
    
     @IsEnum(UserRole)
-    role: UserRole;
+    role!: UserRole;
 
 
 }
