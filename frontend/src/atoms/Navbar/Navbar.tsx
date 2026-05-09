@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <div className='flex justify-around  '>
+    <div className='flex justify-around p-5 bg-gray-800 text-white shadow-2xl '>
       <div className='flex justify-start'>
           MYJOB
       </div>

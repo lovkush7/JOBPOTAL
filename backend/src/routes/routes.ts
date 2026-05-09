@@ -4,6 +4,10 @@
 import type { TsoaRoute } from '@tsoa/runtime';
 import {  fetchMiddlewares, ExpressTemplateService } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { UserController } from './../controller/Users/Getusers.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { JobController } from './../controller/jobs/Job.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Authentication } from './../controller/auth/Auth.controller';
 import { expressAuthentication } from './../middleware/Authentication';
 // @ts-ignore - no great way to install types from subpackage
@@ -15,6 +19,52 @@ const expressAuthenticationRecasted = expressAuthentication as (req: ExRequest, 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "jobkind": {
+        "dataType": "refEnum",
+        "enums": ["REMOTE","HYBRID","ON_SITE"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "JobType": {
+        "dataType": "refEnum",
+        "enums": ["FULL_TIME","PART_TIME","CONTRACT","TEMPORARY","INTERN","VOLUNTEER","OTHER"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Jobs": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"string","required":true},
+            "updatedAt": {"dataType":"datetime","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+            "deletedAt": {"dataType":"datetime","required":true},
+            "title": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
+            "company": {"dataType":"string","required":true},
+            "location": {"dataType":"string","required":true},
+            "jobkind": {"ref":"jobkind","required":true},
+            "salary": {"dataType":"string","required":true},
+            "experience": {"dataType":"string","required":true},
+            "Reqskills": {"dataType":"array","array":{"dataType":"string"},"required":true},
+            "jobType": {"ref":"JobType","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "JobsDto": {
+        "dataType": "refObject",
+        "properties": {
+            "title": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
+            "company": {"dataType":"string","required":true},
+            "location": {"dataType":"string","required":true},
+            "salary": {"dataType":"string","required":true},
+            "experience": {"dataType":"string","required":true},
+            "Reqskills": {"dataType":"array","array":{"dataType":"string"},"required":true},
+            "jobType": {"ref":"JobType","required":true},
+            "jobkind": {"ref":"jobkind","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "UserRole": {
         "dataType": "refEnum",
         "enums": ["ADMIN","EMPLOYEE","JOB_SEEKER"],
@@ -57,6 +107,8 @@ const models: TsoaRoute.Models = {
             "phone": {"dataType":"string","required":true},
             "address": {"dataType":"string","required":true},
             "role": {"ref":"UserRole","required":true},
+            "experience": {"dataType":"string","required":true},
+            "skills": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -87,6 +139,67 @@ export function RegisterRoutes(app: Router) {
 
 
     
+        const argsUserController_getusers: Record<string, TsoaRoute.ParameterSchema> = {
+        };
+        app.get('/user/getusers',
+            ...(fetchMiddlewares<RequestHandler>(UserController)),
+            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.getusers)),
+
+            async function UserController_getusers(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsUserController_getusers, request, response });
+
+                const controller = new UserController();
+
+              await templateService.apiHandler({
+                methodName: 'getusers',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsJobController_createjob: Record<string, TsoaRoute.ParameterSchema> = {
+                body: {"in":"body","name":"body","required":true,"ref":"JobsDto"},
+                request: {"in":"request","name":"request","required":true,"dataType":"object"},
+        };
+        app.post('/jobs/createjob',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(JobController)),
+            ...(fetchMiddlewares<RequestHandler>(JobController.prototype.createjob)),
+
+            async function JobController_createjob(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsJobController_createjob, request, response });
+
+                const controller = new JobController();
+
+              await templateService.apiHandler({
+                methodName: 'createjob',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsAuthentication_signup: Record<string, TsoaRoute.ParameterSchema> = {
                 body: {"in":"body","name":"body","required":true,"ref":"UserDto"},
         };

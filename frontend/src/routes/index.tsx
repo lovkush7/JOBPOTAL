@@ -5,11 +5,11 @@ import Home from '@/molucules/home/Home';
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
-  loader: async () => {
+  beforeLoad: async () => {
     const {check, authuser} = AuthStore.getState()
     await check()
-    if(!authuser){
-      redirect({to: "/auth/login"})
+    if(!authuser ){
+    throw  redirect({to: "/auth/login"})
     }
   },
   component: () => <Home/>

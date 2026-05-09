@@ -1,8 +1,10 @@
 import { api } from "@/api/api"
 import { create } from "zustand"
 
+
+
 const AuthStore =  create((set: any)=>({
-    authuser: null,
+    authuser: null ,
 
     check: async ()=>{
         try{
@@ -33,6 +35,7 @@ const AuthStore =  create((set: any)=>({
             const res = await api.post("/auth/login", data)
             set({authuser: res.data})
             console.log(res.data)
+            console.log("authuser", AuthStore.getState().authuser)
             return {success: true}
         }catch(err){
             console.log(err)

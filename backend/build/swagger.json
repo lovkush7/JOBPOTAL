@@ -7,6 +7,139 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"jobkind": {
+				"enum": [
+					"REMOTE",
+					"HYBRID",
+					"ON_SITE"
+				],
+				"type": "string"
+			},
+			"JobType": {
+				"enum": [
+					"FULL_TIME",
+					"PART_TIME",
+					"CONTRACT",
+					"TEMPORARY",
+					"INTERN",
+					"VOLUNTEER",
+					"OTHER"
+				],
+				"type": "string"
+			},
+			"Jobs": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"company": {
+						"type": "string"
+					},
+					"location": {
+						"type": "string"
+					},
+					"jobkind": {
+						"$ref": "#/components/schemas/jobkind"
+					},
+					"salary": {
+						"type": "string"
+					},
+					"experience": {
+						"type": "string"
+					},
+					"Reqskills": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"jobType": {
+						"$ref": "#/components/schemas/JobType"
+					}
+				},
+				"required": [
+					"id",
+					"updatedAt",
+					"createdAt",
+					"deletedAt",
+					"title",
+					"description",
+					"company",
+					"location",
+					"jobkind",
+					"salary",
+					"experience",
+					"Reqskills",
+					"jobType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"JobsDto": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"company": {
+						"type": "string"
+					},
+					"location": {
+						"type": "string"
+					},
+					"salary": {
+						"type": "string"
+					},
+					"experience": {
+						"type": "string"
+					},
+					"Reqskills": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"jobType": {
+						"$ref": "#/components/schemas/JobType"
+					},
+					"jobkind": {
+						"$ref": "#/components/schemas/jobkind"
+					}
+				},
+				"required": [
+					"title",
+					"description",
+					"company",
+					"location",
+					"salary",
+					"experience",
+					"Reqskills",
+					"jobType",
+					"jobkind"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"UserRole": {
 				"enum": [
 					"ADMIN",
@@ -116,6 +249,12 @@
 					},
 					"role": {
 						"$ref": "#/components/schemas/UserRole"
+					},
+					"experience": {
+						"type": "string"
+					},
+					"skills": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -124,7 +263,9 @@
 					"password",
 					"phone",
 					"address",
-					"role"
+					"role",
+					"experience",
+					"skills"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -157,6 +298,51 @@
 		"contact": {}
 	},
 	"paths": {
+		"/user/getusers": {
+			"get": {
+				"operationId": "Getusers",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/jobs/createjob": {
+			"post": {
+				"operationId": "Createjob",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Jobs"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/JobsDto"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/auth/signup": {
 			"post": {
 				"operationId": "Signup",

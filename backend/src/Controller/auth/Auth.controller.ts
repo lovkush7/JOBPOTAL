@@ -2,11 +2,14 @@ import { Body, Controller, Get, Post, Request, Route, Security } from "tsoa";
 import  { UserDto } from "../../dto/User.dto.ts";
 import AuthServices from "../../Service/Authservice/Auth.services.ts";
 import  Logindto from "../../dto/Login.dto.ts";
+import Envconfig from "../../config/Envconfig.ts";
 
 
-const buildjwttoken =(token: string)=>{
-return `jwt=${token}; HttpOnly; Max-Age=3600; Path=/; SameSite=None; secure `
-}
+const buildjwttoken = (token: string) => {
+  const isProduction = Envconfig.NODE_ENV === "production";
+
+  return `jwt=${token}; HttpOnly; Max-Age=604800; Path=/; SameSite=${isProduction ? "None" : "Lax"}; ${isProduction ? "Secure;" : ""}`;
+};
 @Route("auth")
  export class Authentication extends Controller{
    @Post("signup")

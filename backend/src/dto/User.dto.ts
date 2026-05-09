@@ -1,5 +1,6 @@
 import { IsEmail, IsEnum, IsNotEmpty, IsString, Max } from "class-validator";
 import  { UserRole } from "../Enum/Enum.ts";
+import { Column } from "typeorm";
 
 export class UserDto {
     @IsString()
@@ -26,6 +27,12 @@ export class UserDto {
    
     @IsEnum(UserRole)
     role!: UserRole;
+
+    @IsString()
+    experience: string;
+
+     @IsString()
+     skills: string;
 
 
 }

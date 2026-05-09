@@ -16,8 +16,22 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Link, useNavigate } from "@tanstack/react-router"
+import { useState } from "react"
+import AuthStore from "@/authStore/AuthStore"
 
 export const LoginForm = ()=> {
+
+  const [text , settext] = useState({
+    email: '',
+    password: '',
+  })
+  const { login} = AuthStore()
+ 
+  const handlesubmit = async(e: any) => {
+    e.preventDefault();
+     await login(text);
+     
+  }
 
   return (
     <div className="flex justify-center items-center h-screen ">
@@ -30,7 +44,7 @@ export const LoginForm = ()=> {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handlesubmit}>
             <FieldGroup>
               <Field>
                 <Button variant="outline" type="button">
@@ -62,6 +76,8 @@ export const LoginForm = ()=> {
                   id="email"
                   type="email"
                   placeholder="m@example.com"
+                  value={text.email}
+                  onChange={(e) => settext({ ...text, email: e.target.value })}
                   required
                 />
               </Field>
@@ -75,7 +91,13 @@ export const LoginForm = ()=> {
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input 
+                  id="password" 
+                  type="password" 
+                  value={text.password}
+                  onChange={(e) => settext({ ...text, password: e.target.value })}
+                  required 
+                />
               </Field>
               <Field>
                 <Button type="submit">Login</Button>
