@@ -1,7 +1,9 @@
-import { Column } from "typeorm";
+import { Column, Entity } from "typeorm";
 import CommonEntity from "./commonentity.ts";
 import { jobkind, JobType } from "../Enum/Enum.ts";
 
+
+@Entity("jobs")
 class Jobs extends CommonEntity {
 
     @Column({type: "text"})
@@ -26,7 +28,7 @@ class Jobs extends CommonEntity {
     @Column({type: "text"})
     experience: string;
 
-    @Column({type: "array", nullable: true})
+    @Column({type: "text", array: true, nullable: true})
     Reqskills: string[];
 
     @Column({type: "enum", enum: JobType, default: JobType.FULL_TIME})

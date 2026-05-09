@@ -16,25 +16,32 @@ import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import jobstore from '@/authStore/JobsStore';
 
 const Jobs = () => {
     const {authuser} = AuthStore() as any;
     const [text , setText] = useState({
         title: '',
-        companyName: '',
+        company: '',
         location: '',
         salary: '',
         experience: '',
-        skills: '',
-        jobType: '',
-        jobKind: '',
-        message: '',
+        Reqskills: '',
+        jobType: 'FULL_TIME',
+        jobkind: 'REMOTE',
+        description: '',
     })
+    const {addjob} =  jobstore()
 
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async(e: any) => {
     e.preventDefault();
-    // Handle form submission logic here
+
+    try { 
+      await addjob(text)
+    } catch (err) {
+      console.log(err)
+    }
   }
     // console.log("authuser in jobs:", authuser?.role)
   return (
@@ -67,8 +74,8 @@ const Jobs = () => {
         <Input 
         id="company-name" 
         placeholder="Company Name" 
-        value={text.companyName}
-        onChange={(e)=>setText({...text, companyName:e.target.value})}
+        value={text.company}
+        onChange={(e)=>setText({...text, company:e.target.value})}
 
         />
       </Field>
@@ -102,15 +109,15 @@ const Jobs = () => {
         <Input 
         type='text'
           placeholder='skills...'
-          value={text.skills}
-          onChange={(e)=>setText({...text, skills:e.target.value})}
+          value={text.Reqskills}
+          onChange={(e)=>setText({...text, Reqskills:e.target.value})}
           required
         />
       </Field>
      
               <Field>
             <FieldLabel htmlFor="jobtype">JobType</FieldLabel>
-            <Select defaultValue="Full_Time" onValueChange={(value)=>{
+            <Select defaultValue="FULL_TIME" value={text.jobType} onValueChange={(value)=>{
               if(value){
                 setText({...text, jobType: value})
               }
@@ -120,22 +127,22 @@ const Jobs = () => {
               </SelectTrigger>
               <SelectContent>
        
-                <SelectItem value="Full_Time">Full Time</SelectItem>
-                <SelectItem value="Part_Time">Part Time</SelectItem>
-                <SelectItem value="Contract">Contract</SelectItem>
-                <SelectItem value="Temporary">Temporary</SelectItem>
-                <SelectItem value="Intern">Intern</SelectItem>
-                <SelectItem value="Volunteer">Volunteer</SelectItem>
-                <SelectItem value="Other">Other</SelectItem>
+                <SelectItem value="FULL_TIME">Full Time </SelectItem>
+                <SelectItem value="PART_TIME">Part Time</SelectItem>
+                <SelectItem value="CONTRACT">Contract</SelectItem>
+                <SelectItem value="TEMPORARY">Temporary</SelectItem>
+                <SelectItem value="INTERN">Intern</SelectItem>
+                <SelectItem value="VOLUNTEER">Volunteer</SelectItem>
+                <SelectItem value="OTHER">Other</SelectItem>
               </SelectContent>
             </Select>
           </Field>
  <Field>
 
             <FieldLabel htmlFor="jobkind">jobkind</FieldLabel>
-            <Select defaultValue="REMOTE" onValueChange={(value)=>{
+            <Select defaultValue="REMOTE" value={text.jobkind}  onValueChange={(value)=>{
               if(value){
-                setText({...text, jobKind:value})
+                setText({...text, jobkind:value})
               }
             }}>
               <SelectTrigger id="JOBKIND" >
@@ -153,8 +160,8 @@ const Jobs = () => {
       <FieldLabel htmlFor="textarea">Message</FieldLabel>
       <Textarea
         id="textarea"
-          value={text.message}
-          onChange={(e)=>setText({...text, message:e.target.value})}
+          value={text.description}
+          onChange={(e)=>setText({...text, description:e.target.value})}
         rows={3}
         placeholder="Type your message here."
        
@@ -164,7 +171,7 @@ const Jobs = () => {
     </AlertDialogHeader>
     <AlertDialogFooter>
       <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <Button>Add </Button>
+      <Button type='submit'>Add </Button>
     </AlertDialogFooter>
      </form>
   </AlertDialogContent>
