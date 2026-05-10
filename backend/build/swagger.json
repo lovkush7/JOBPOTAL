@@ -27,6 +27,21 @@
 				],
 				"type": "string"
 			},
+			"UserRole": {
+				"enum": [
+					"ADMIN",
+					"EMPLOYEE",
+					"JOB_SEEKER"
+				],
+				"type": "string"
+			},
+			"AuthProvider": {
+				"enum": [
+					"LOCAL",
+					"GOOGLE"
+				],
+				"type": "string"
+			},
 			"Jobs": {
 				"properties": {
 					"id": {
@@ -73,6 +88,9 @@
 					},
 					"jobType": {
 						"$ref": "#/components/schemas/JobType"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
 					}
 				},
 				"required": [
@@ -88,72 +106,11 @@
 					"salary",
 					"experience",
 					"Reqskills",
-					"jobType"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"JobsDto": {
-				"properties": {
-					"title": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"company": {
-						"type": "string"
-					},
-					"location": {
-						"type": "string"
-					},
-					"salary": {
-						"type": "string"
-					},
-					"experience": {
-						"type": "string"
-					},
-					"Reqskills": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"jobType": {
-						"$ref": "#/components/schemas/JobType"
-					},
-					"jobkind": {
-						"$ref": "#/components/schemas/jobkind"
-					}
-				},
-				"required": [
-					"title",
-					"description",
-					"company",
-					"location",
-					"salary",
-					"experience",
-					"Reqskills",
 					"jobType",
-					"jobkind"
+					"user"
 				],
 				"type": "object",
 				"additionalProperties": false
-			},
-			"UserRole": {
-				"enum": [
-					"ADMIN",
-					"EMPLOYEE",
-					"JOB_SEEKER"
-				],
-				"type": "string"
-			},
-			"AuthProvider": {
-				"enum": [
-					"LOCAL",
-					"GOOGLE"
-				],
-				"type": "string"
 			},
 			"User": {
 				"properties": {
@@ -207,6 +164,12 @@
 					},
 					"refreshToken": {
 						"type": "string"
+					},
+					"jobs": {
+						"items": {
+							"$ref": "#/components/schemas/Jobs"
+						},
+						"type": "array"
 					}
 				},
 				"required": [
@@ -225,7 +188,55 @@
 					"googleId",
 					"isEmailVerified",
 					"isActive",
-					"refreshToken"
+					"refreshToken",
+					"jobs"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"JobsDto": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"company": {
+						"type": "string"
+					},
+					"location": {
+						"type": "string"
+					},
+					"salary": {
+						"type": "string"
+					},
+					"experience": {
+						"type": "string"
+					},
+					"Reqskills": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"jobType": {
+						"$ref": "#/components/schemas/JobType"
+					},
+					"jobkind": {
+						"$ref": "#/components/schemas/jobkind"
+					}
+				},
+				"required": [
+					"title",
+					"description",
+					"company",
+					"location",
+					"salary",
+					"experience",
+					"Reqskills",
+					"jobType",
+					"jobkind"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -341,6 +352,28 @@
 						}
 					}
 				}
+			}
+		},
+		"/jobs/getjobs": {
+			"get": {
+				"operationId": "Getjobs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Jobs"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/auth/signup": {

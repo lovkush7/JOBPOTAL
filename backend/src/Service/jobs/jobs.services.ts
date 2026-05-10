@@ -30,6 +30,7 @@ class JobsService {
             newjob.Reqskills = body.Reqskills;
             newjob.jobType = body.jobType;
             newjob.jobkind = body.jobkind;
+            newjob.user = existinguser;
             await newjob.save();
 
             return newjob;
@@ -40,6 +41,20 @@ class JobsService {
             throw err;
         }
 
+    }
+
+    async getjobs(){
+        try{
+
+            const joobs = await Jobs.find({
+                relations:{
+                    user: true
+                }
+            });
+            return joobs;
+        }catch(err){
+                throw err;
+        }
     }
 }
 export default new JobsService();

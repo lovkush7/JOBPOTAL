@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Request, Route, Security } from "tsoa";
+import { Body, Controller, Get, Post, Request, Route, Security } from "tsoa";
 import type JobsDto from "../../dto/jobs.dto.ts";
 import jobsServices from "../../Service/jobs/jobs.services.ts";
 
@@ -22,5 +22,10 @@ export class JobController  extends Controller {
         console.log(err)
         throw err;
      }
+    }
+    @Get("getjobs")
+  
+    async getjobs(){
+        return await jobsServices.getjobs();
     }
 }

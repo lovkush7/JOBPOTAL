@@ -13,6 +13,17 @@ const jobstore = create((set: any)=>({
             console.log(err)
             return {success: false, error: err}
         }
-    }
+    },
+    getjobs: async()=>{
+        try{
+            const res = await api.get("/jobs/getjobs")
+            set({jobs: res.data})
+            return {success: true}
+        }catch(err){
+            console.log(err)
+            return {success: false, error: err}
+        }
+    },
+
 }))
 export default jobstore;

@@ -29,6 +29,16 @@ const models: TsoaRoute.Models = {
         "enums": ["FULL_TIME","PART_TIME","CONTRACT","TEMPORARY","INTERN","VOLUNTEER","OTHER"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserRole": {
+        "dataType": "refEnum",
+        "enums": ["ADMIN","EMPLOYEE","JOB_SEEKER"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AuthProvider": {
+        "dataType": "refEnum",
+        "enums": ["LOCAL","GOOGLE"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Jobs": {
         "dataType": "refObject",
         "properties": {
@@ -45,34 +55,9 @@ const models: TsoaRoute.Models = {
             "experience": {"dataType":"string","required":true},
             "Reqskills": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "jobType": {"ref":"JobType","required":true},
+            "user": {"ref":"User","required":true},
         },
         "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "JobsDto": {
-        "dataType": "refObject",
-        "properties": {
-            "title": {"dataType":"string","required":true},
-            "description": {"dataType":"string","required":true},
-            "company": {"dataType":"string","required":true},
-            "location": {"dataType":"string","required":true},
-            "salary": {"dataType":"string","required":true},
-            "experience": {"dataType":"string","required":true},
-            "Reqskills": {"dataType":"array","array":{"dataType":"string"},"required":true},
-            "jobType": {"ref":"JobType","required":true},
-            "jobkind": {"ref":"jobkind","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "UserRole": {
-        "dataType": "refEnum",
-        "enums": ["ADMIN","EMPLOYEE","JOB_SEEKER"],
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "AuthProvider": {
-        "dataType": "refEnum",
-        "enums": ["LOCAL","GOOGLE"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "User": {
@@ -94,6 +79,23 @@ const models: TsoaRoute.Models = {
             "isEmailVerified": {"dataType":"boolean","required":true},
             "isActive": {"dataType":"boolean","required":true},
             "refreshToken": {"dataType":"string","required":true},
+            "jobs": {"dataType":"array","array":{"dataType":"refObject","ref":"Jobs"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "JobsDto": {
+        "dataType": "refObject",
+        "properties": {
+            "title": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
+            "company": {"dataType":"string","required":true},
+            "location": {"dataType":"string","required":true},
+            "salary": {"dataType":"string","required":true},
+            "experience": {"dataType":"string","required":true},
+            "Reqskills": {"dataType":"array","array":{"dataType":"string"},"required":true},
+            "jobType": {"ref":"JobType","required":true},
+            "jobkind": {"ref":"jobkind","required":true},
         },
         "additionalProperties": false,
     },
@@ -189,6 +191,35 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'createjob',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsJobController_getjobs: Record<string, TsoaRoute.ParameterSchema> = {
+        };
+        app.get('/jobs/getjobs',
+            ...(fetchMiddlewares<RequestHandler>(JobController)),
+            ...(fetchMiddlewares<RequestHandler>(JobController.prototype.getjobs)),
+
+            async function JobController_getjobs(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsJobController_getjobs, request, response });
+
+                const controller = new JobController();
+
+              await templateService.apiHandler({
+                methodName: 'getjobs',
                 controller,
                 response,
                 next,

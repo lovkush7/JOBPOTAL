@@ -1,7 +1,8 @@
-import { BeforeInsert, Column, Entity, Index } from "typeorm";
+import { BeforeInsert, Column, Entity, Index, JoinColumn, OneToMany } from "typeorm";
 import CommonEntity from "./commonentity.ts";
 import { AuthProvider, UserRole } from "../Enum/Enum.ts";
 import bcrypt from "bcrypt"
+import Jobs from "./jobs.entitiy.ts";
 
 @Entity("user")
 class User  extends CommonEntity{
@@ -42,6 +43,10 @@ class User  extends CommonEntity{
      
      @Column({type: 'text', nullable: true, select: false})
      refreshToken: string;
+
+     @OneToMany(()=>Jobs, (job)=>job.user)
+     @JoinColumn({name: "user_id"})
+       jobs: Jobs[];
 
      @BeforeInsert()
      _(){

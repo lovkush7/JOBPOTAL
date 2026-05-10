@@ -1,6 +1,7 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 import CommonEntity from "./commonentity.ts";
 import { jobkind, JobType } from "../Enum/Enum.ts";
+import User from "./user.entities.ts";
 
 
 @Entity("jobs")
@@ -33,5 +34,8 @@ class Jobs extends CommonEntity {
 
     @Column({type: "enum", enum: JobType, default: JobType.FULL_TIME})
     jobType: JobType;
+
+    @ManyToOne(()=>User, (user)=>user.jobs)
+    user: User;
 }
 export default Jobs;

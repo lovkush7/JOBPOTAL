@@ -1,6 +1,7 @@
 import AuthStore from '@/authStore/AuthStore';
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react'
+import { Toaster } from "@/components/ui/sonner"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,6 +18,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import jobstore from '@/authStore/JobsStore';
+import { toast } from 'sonner';
 
 const Jobs = () => {
     const {authuser} = AuthStore() as any;
@@ -39,8 +41,21 @@ const Jobs = () => {
 
     try { 
       await addjob(text)
+      toast.success("Job added successfully", { position: "top-center" })
+      setText({
+        title: '',  
+        company: '',
+        location: '',
+        salary: '',
+        experience: '',
+        Reqskills: '',
+        jobType: 'FULL_TIME',
+        jobkind: 'REMOTE',
+        description: '',
+      })
     } catch (err) {
       console.log(err)
+      toast.error("Failed to add job", { position: "top-center" })
     }
   }
     // console.log("authuser in jobs:", authuser?.role)
@@ -178,7 +193,7 @@ const Jobs = () => {
 </AlertDialog>
  </div>
       )}
-
+ <Toaster />
     </div>
   )
 }
