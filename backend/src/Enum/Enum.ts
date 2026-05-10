@@ -26,3 +26,9 @@ export enum jobkind {
     ON_SITE = "ON_SITE",
 
 }
+ export enum JOBSTAUTS {
+    PENDING = "PENDING",
+    ACCEPTED = "ACCEPTED",
+   
+
+ }

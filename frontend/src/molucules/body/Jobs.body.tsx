@@ -69,7 +69,7 @@ const Jobs = () => {
   <AlertDialogTrigger >
     <Button variant="outline">Add Job</Button>
   </AlertDialogTrigger>
-  <AlertDialogContent className="w-full !max-w-5xl ">
+  <AlertDialogContent className="w-full !max-w-5xl max-h-[90vh] overflow-y-auto  ">
     <form onSubmit={handleSubmit}>
     <AlertDialogHeader>
       

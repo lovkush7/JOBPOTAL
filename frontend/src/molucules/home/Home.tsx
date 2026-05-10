@@ -8,13 +8,14 @@ import Mapjob from '../body/Mapjob'
 
 const Home = () => {
   const {authuser , check} = AuthStore.getState()
-  const {getjobs}= jobstore()
+  const {getjobs, jobs}= jobstore()
   console.log("authuser:", authuser)
   useEffect(()=>{
   check()
   getjobs()
   },[  ])
   console.log("authuser after check:", authuser)
+  console.log("jobs:", jobs)
   return (
     <div className='w-full h-screen '>
       <Navbar/>
