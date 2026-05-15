@@ -29,6 +29,11 @@ const models: TsoaRoute.Models = {
         "enums": ["FULL_TIME","PART_TIME","CONTRACT","TEMPORARY","INTERN","VOLUNTEER","OTHER"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "JOBSTAUTS": {
+        "dataType": "refEnum",
+        "enums": ["PENDING","ACCEPTED"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "UserRole": {
         "dataType": "refEnum",
         "enums": ["ADMIN","EMPLOYEE","JOB_SEEKER"],
@@ -55,6 +60,7 @@ const models: TsoaRoute.Models = {
             "experience": {"dataType":"string","required":true},
             "Reqskills": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "jobType": {"ref":"JobType","required":true},
+            "jobStatus": {"ref":"JOBSTAUTS","required":true},
             "user": {"ref":"User","required":true},
         },
         "additionalProperties": false,
@@ -96,6 +102,17 @@ const models: TsoaRoute.Models = {
             "Reqskills": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "jobType": {"ref":"JobType","required":true},
             "jobkind": {"ref":"jobkind","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SearchDto": {
+        "dataType": "refObject",
+        "properties": {
+            "search": {"dataType":"string","required":true},
+            "page": {"dataType":"double","required":true},
+            "limit": {"dataType":"double","required":true},
+            "kind": {"ref":"jobkind","required":true},
         },
         "additionalProperties": false,
     },
@@ -220,6 +237,36 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getjobs',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsJobController_searchjobs: Record<string, TsoaRoute.ParameterSchema> = {
+                query: {"in":"queries","name":"query","required":true,"ref":"SearchDto"},
+        };
+        app.get('/jobs/searchjobs',
+            ...(fetchMiddlewares<RequestHandler>(JobController)),
+            ...(fetchMiddlewares<RequestHandler>(JobController.prototype.searchjobs)),
+
+            async function JobController_searchjobs(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsJobController_searchjobs, request, response });
+
+                const controller = new JobController();
+
+              await templateService.apiHandler({
+                methodName: 'searchjobs',
                 controller,
                 response,
                 next,

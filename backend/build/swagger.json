@@ -27,6 +27,13 @@
 				],
 				"type": "string"
 			},
+			"JOBSTAUTS": {
+				"enum": [
+					"PENDING",
+					"ACCEPTED"
+				],
+				"type": "string"
+			},
 			"UserRole": {
 				"enum": [
 					"ADMIN",
@@ -89,6 +96,9 @@
 					"jobType": {
 						"$ref": "#/components/schemas/JobType"
 					},
+					"jobStatus": {
+						"$ref": "#/components/schemas/JOBSTAUTS"
+					},
 					"user": {
 						"$ref": "#/components/schemas/User"
 					}
@@ -107,6 +117,7 @@
 					"experience",
 					"Reqskills",
 					"jobType",
+					"jobStatus",
 					"user"
 				],
 				"type": "object",
@@ -237,6 +248,32 @@
 					"Reqskills",
 					"jobType",
 					"jobkind"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SearchDto": {
+				"properties": {
+					"search": {
+						"type": "string"
+					},
+					"page": {
+						"type": "number",
+						"format": "double"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"kind": {
+						"$ref": "#/components/schemas/jobkind"
+					}
+				},
+				"required": [
+					"search",
+					"page",
+					"limit",
+					"kind"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -374,6 +411,53 @@
 				},
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/jobs/searchjobs": {
+			"get": {
+				"operationId": "Searchjobs",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "search",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "kind",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/jobkind"
+						}
+					}
+				]
 			}
 		},
 		"/auth/signup": {

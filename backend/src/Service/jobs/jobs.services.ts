@@ -56,5 +56,13 @@ class JobsService {
                 throw err;
         }
     }
+    async searchjobs(
+        limit: number = 10 ,
+        page: number = 1,
+        search: string,
+        kind: string
+    ){
+
+    }
 }
 export default new JobsService();

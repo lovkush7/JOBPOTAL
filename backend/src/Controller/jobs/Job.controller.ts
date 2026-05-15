@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post, Request, Route, Security } from "tsoa";
+import { Body, Controller, Get, Post, Queries, Query, Request, Route, Security } from "tsoa";
 import type JobsDto from "../../dto/jobs.dto.ts";
 import jobsServices from "../../Service/jobs/jobs.services.ts";
+import type SearchDto from "../../dto/search.dto.ts";
 
 @Route("jobs")
 export class JobController  extends Controller {
@@ -28,4 +29,13 @@ export class JobController  extends Controller {
     async getjobs(){
         return await jobsServices.getjobs();
     }
+
+    @Get("searchjobs")
+   async searchjobs (
+    @Queries() query: SearchDto
+   ){
+
+    return await jobsServices.searchjobs(query.limit, query.page, query.search, query.kind )
+
+   }
 }
