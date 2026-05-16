@@ -32,10 +32,17 @@ export class JobController  extends Controller {
 
     @Get("searchjobs")
    async searchjobs (
-    @Queries() query: SearchDto
+    @Query() page: number = 1,
+    @Query() limit: number = 10,
+    @Query() search: string = "",
+    @Query() kind: string = "",
+    @Query() type: string = "",
+    @Query() status: string = ""
+   
    ){
 
-    return await jobsServices.searchjobs(query.limit, query.page, query.search, query.kind )
+    return await jobsServices.searchjobs(page, limit, search, kind, type, status)
+   
 
    }
 }
