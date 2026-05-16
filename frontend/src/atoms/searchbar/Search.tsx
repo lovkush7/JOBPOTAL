@@ -11,15 +11,32 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { useMutation } from '@tanstack/react-query'
+import {  useMutation } from '@tanstack/react-query'
+import { api } from '@/api/api'
+
+
+const searchdata = async(data : any)=>{
+  const res =  await api.post("/jobs/search",data)
+  return res.data;
+}
  
 const Search = () => {
   const [Value, setValue] = useState("")
   console.log("the value is ", Value);
 
   const mutation = useMutation({
-    
+    mutationFn: searchdata,
+
+    onSuccess: ()=>{
+      console.log("done")
+    }
   })
+const handlesubmit = (e: React.FormEvent)=>{
+  e.preventDefault()
+  mutation.mutate({Value})
+}
+
+ 
   return (
     <div className='flex  w-full '>
      <Dialog >
@@ -35,18 +52,26 @@ const Search = () => {
         
        
     </DialogHeader>
+    <form action="" onSubmit={handlesubmit}>
     <div className='flex w-full mt-5'>
+    
         <Input value={Value} onChange={(e)=>setValue(e.target.value)} className='w-full' id="input-button-group" placeholder="Type to search..." />
-       <Button variant="outline">Search</Button>
+       <Button type='submit' variant="outline">Search</Button>
     </div>
     <div className='flex gap-2'>
-      <Button onClick={()=>setValue("REMOTE")} >Remote</Button>
-      <Button onClick={()=>setValue("HYBRID")}>Hybrid</Button>
-      <Button onClick={()=>setValue("ONSITE")}>On Site</Button>
-      <Button onClick={()=>setValue("PENDING")}>Pending</Button>
-      <Button onClick={()=>setValue("FULL_TIME")}>Full Time</Button>
-      <Button onClick={()=>setValue("PART_TIME")}>Part Time</Button>
+      <Button
+  type="button"
+  onClick={() => mutation.mutate({ Value: "REMOTE" })}
+>
+  Remote
+</Button>
+      <Button type='button' onClick={()=>setValue("HYBRID")}>Hybrid</Button>
+      <Button type='button' onClick={()=>setValue("ONSITE")}>On Site</Button>
+      <Button type='button' onClick={()=>setValue("PENDING")}>Pending</Button>
+      <Button type='button' onClick={()=>setValue("FULL_TIME")}>Full Time</Button>
+      <Button type='button' onClick={()=>setValue("PART_TIME")}>Part Time</Button>
     </div>
+    </form>
   </DialogContent>
 </Dialog>
    </div>
