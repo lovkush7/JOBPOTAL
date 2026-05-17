@@ -252,32 +252,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"SearchDto": {
-				"properties": {
-					"search": {
-						"type": "string"
-					},
-					"page": {
-						"type": "number",
-						"format": "double"
-					},
-					"limit": {
-						"type": "number",
-						"format": "double"
-					},
-					"kind": {
-						"$ref": "#/components/schemas/jobkind"
-					}
-				},
-				"required": [
-					"search",
-					"page",
-					"limit",
-					"kind"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"UserDto": {
 				"properties": {
 					"Fullname": {
@@ -417,25 +391,51 @@
 			"get": {
 				"operationId": "Searchjobs",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"totalpages": {
+											"type": "number",
+											"format": "double"
+										},
+										"currentpage": {
+											"type": "number",
+											"format": "double"
+										},
+										"total": {
+											"type": "number",
+											"format": "double"
+										},
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/Jobs"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"totalpages",
+										"currentpage",
+										"total",
+										"data"
+									],
+									"type": "object"
+								}
+							}
+						}
 					}
 				},
 				"security": [],
 				"parameters": [
 					{
 						"in": "query",
-						"name": "search",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
 						"name": "page",
-						"required": true,
+						"required": false,
 						"schema": {
+							"default": 1,
 							"format": "double",
 							"type": "number"
 						}
@@ -443,18 +443,47 @@
 					{
 						"in": "query",
 						"name": "limit",
-						"required": true,
+						"required": false,
 						"schema": {
+							"default": 10,
 							"format": "double",
 							"type": "number"
 						}
 					},
 					{
 						"in": "query",
-						"name": "kind",
-						"required": true,
+						"name": "search",
+						"required": false,
 						"schema": {
-							"$ref": "#/components/schemas/jobkind"
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "kind",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"default": "",
+							"type": "string"
 						}
 					}
 				]

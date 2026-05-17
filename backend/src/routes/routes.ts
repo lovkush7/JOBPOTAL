@@ -106,17 +106,6 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "SearchDto": {
-        "dataType": "refObject",
-        "properties": {
-            "search": {"dataType":"string","required":true},
-            "page": {"dataType":"double","required":true},
-            "limit": {"dataType":"double","required":true},
-            "kind": {"ref":"jobkind","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "UserDto": {
         "dataType": "refObject",
         "properties": {
@@ -249,7 +238,12 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsJobController_searchjobs: Record<string, TsoaRoute.ParameterSchema> = {
-                query: {"in":"queries","name":"query","required":true,"ref":"SearchDto"},
+                page: {"default":1,"in":"query","name":"page","dataType":"double"},
+                limit: {"default":10,"in":"query","name":"limit","dataType":"double"},
+                search: {"default":"","in":"query","name":"search","dataType":"string"},
+                kind: {"default":"","in":"query","name":"kind","dataType":"string"},
+                type: {"default":"","in":"query","name":"type","dataType":"string"},
+                status: {"default":"","in":"query","name":"status","dataType":"string"},
         };
         app.get('/jobs/searchjobs',
             ...(fetchMiddlewares<RequestHandler>(JobController)),

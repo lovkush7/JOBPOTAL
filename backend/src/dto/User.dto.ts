@@ -28,11 +28,11 @@ export class UserDto {
     @IsEnum(UserRole)
     role!: UserRole;
 
-    @IsString()
-    experience: string;
+    // @IsString()
+    // experience: string;
 
-     @IsString()
-     skills: string;
+    //  @IsString()
+    //  skills: string;
 
 
 }
